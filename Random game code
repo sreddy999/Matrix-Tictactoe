@@ -1,0 +1,75 @@
+import random
+import numpy as np
+
+def first(n):
+    matrix = []
+    for i in range(n):
+        matrix.append([])
+        for j in range(n):
+            matrix[i].append(9)                                         #builds matrix
+    row = int(input("choose a row"))
+    column = int(input("choose a column"))                              #asks for placement of 0
+
+    for i in range(n**2//2):                                            #repeats until grid is filled or 1 remains
+        while matrix[row][column] == 0 or matrix[row][column] == 1:     #will ask again if already taken
+            row = int(input("choose a row"))
+            column = int(input("choose a column"))
+        matrix[row][column] = 0                                         #inserts 0
+        print(matrix)
+
+        row = random.randint(0,n-1)
+        column = random.randint(0,n-1)                                    #randomly choses square
+        while matrix[row][column] == 0 or matrix[row][column] == 1:
+            row = random.randint(0,n-1)
+            column = random.randint(0,n-1)                                #choses again if already taken
+        matrix[row][column] = 1                                         #places 1
+        print(matrix)
+    for i in range(n):
+        for j in range(n):
+            if matrix[i][j] != 0 or matrix[i][j] != 1:                  #checks to see if any vacant squares there will be if n is odd
+                matrix[i][j] = 0                                        #fills in the last square
+    matrix = np.array(matrix)
+    det = np.linalg.det(matrix)                                         #computes determinant
+    print("determinant is", det)
+
+
+def second(n):
+    matrix = []
+    for i in range(n):
+        matrix.append([])
+        for j in range(n):
+            matrix[i].append(9)
+    row = random.randint(0,n-1)
+    column = random.randint(0,n-1)
+    
+    for i in range(n**2//2):
+        while matrix[row][column] == 0 or matrix[row][column] == 1:
+            row = random.randint(0,n-1)
+            column = random.randint(0,n-1)
+        matrix[row][column] = 1
+        print(matrix)
+
+        row = int(input("choose a row"))
+        column = int(input("choose a column"))
+        while matrix[row][column] == 0 or matrix[row][column] == 1:
+            row = int(input("choose a row"))
+            column = int(input("choose a column"))
+        matrix[row][column] = 0
+        print(matrix)
+    for i in range(n):
+        for j in range(n):
+            if matrix[i][j] != 0 or matrix[i][j] != 1:                  
+                matrix[i][j] = 1
+    matrix = np.array(matrix)
+    det = np.linalg.det(matrix)
+    print("determinant is", det)
+
+           
+          
+                  
+size = int(input("size of matrices"))           #asks for size
+order = int(input("0 first or second"))         #asks if player wants to go first or second
+if order == 1:
+    first(size)
+else:
+    second(size)
